@@ -26,3 +26,23 @@ int* targetIndices(int* nums, int numsSize, int target, int* returnSize)
 	*returnSize = j;
 	return ans;
 }
+
+//СІПл 2037
+int cmp(const void*e1, const void*e2)
+{
+	if (*(int*)e1 >= *(int*)e2)
+		return 1;
+	else
+		return 0;
+}
+int minMovesToSeat(int* seats, int seatsSize, int* students, int studentsSize)
+{
+	int sum = 0;
+	qsort(seats, seatsSize, sizeof(int), cmp);
+	qsort(students, seatsSize, sizeof(int), cmp);
+	for (int i = 0; i<seatsSize; i++)
+	{
+		sum += abs(seats[i] - students[i]);
+	}
+	return sum;
+}
