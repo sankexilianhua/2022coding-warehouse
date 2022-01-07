@@ -22,3 +22,24 @@ int heightChecker(int* heights, int heightsSize)
 		count++;
 	return count;
 }
+
+//СІПл  1460
+int cmp(const void*e1, const void*e2)
+{
+	if (*(int*)e1 >= *(int*)e2)
+		return 1;
+	else
+		return 0;
+}
+bool canBeEqual(int* target, int targetSize, int* arr, int arrSize)
+{
+	if (targetSize != arrSize)
+		return false;
+	int i = 0;
+	qsort(target, targetSize, sizeof(int), cmp);
+	qsort(arr, arrSize, sizeof(int), cmp);
+	for (i = 0; i<arrSize; i++)
+	if (arr[i] != target[i])
+		return false;
+	return true;
+}
