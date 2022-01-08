@@ -112,3 +112,46 @@ int** allCellsDistOrder(int rows, int cols, int rCenter, int cCenter, int* retur
 	// }
 	return ans;
 }
+
+//СІПл 1337
+/**
+* Note: The returned array must be malloced, assume caller calls free().
+*/
+int cmp(const void*e1, const void*e2)
+{
+	return *(int*)e1 - *(int*)e2;
+}
+int* kWeakestRows(int** mat, int matSize, int* matColSize, int k, int* returnSize)
+{
+	int* ans = (int*)malloc(sizeof(int)*matSize);
+	int* arr = (int*)malloc(sizeof(int)*matSize);
+	//int* arr2 = (int*)malloc(sizeof(int)*matSize);
+	*returnSize = k;
+	int i = 0;
+	for (i = 0; i<matSize; i++)
+	{
+		int j = 0;
+		int sum = 0;
+		for (j = 0; j<*matColSize; j++)
+		{
+			sum += mat[i][j];
+		}
+		arr[i] = sum;
+		ans[i] = sum;
+	}
+	qsort(ans, matSize, sizeof(int), cmp);
+	for (i = 0; i<matSize; i++)
+	{
+		int j = 0;
+		for (j = 0; j<matSize; j++)
+		{
+			if (ans[i] == arr[j])
+			{
+				ans[i] = j;
+				arr[j] = -1;
+				break;
+			}
+		}
+	}
+	return ans;
+}
