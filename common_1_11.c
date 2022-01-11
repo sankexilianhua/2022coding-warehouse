@@ -34,3 +34,64 @@ int* frequencySort(int* nums, int numsSize, int* returnSize)
 	*returnSize = numsSize;
 	return nums;
 }
+
+//Á¦¿Û 1710
+int cmp(void*e1, void*e2)
+{
+	int*arr1 = *(int**)e1;
+	int*arr2 = *(int**)e2;
+	if (arr1[1] <= arr2[1])
+		return 1;
+	else
+		return 0;
+}
+int maximumUnits(int** boxTypes, int boxTypesSize, int* boxTypesColSize, int truckSize)
+{
+	int row = boxTypesSize;
+	//int col=*boxTypesColSize;
+	int i = 0;
+	int sum = 0;
+	qsort(boxTypes, boxTypesSize, sizeof(int*), cmp);
+	for (i = 0; i<row; i++)
+	{
+		if (truckSize)
+		{
+			if (truckSize >= boxTypes[i][0])
+			{
+				truckSize -= boxTypes[i][0];
+				sum += boxTypes[i][0] * boxTypes[i][1];
+			}
+			else
+			{
+				sum += truckSize*boxTypes[i][1];
+				truckSize = 0;
+			}
+		}
+	}
+	return sum;
+}
+//Á¦¿Û ½£Ö¸offer 39
+int cmp(const void*e1, const void*e2)
+{
+	if (*(int*)e1 >= *(int*)e2)
+		return 1;
+	else
+		return 0;
+}
+int majorityElement(int* nums, int numsSize)
+{
+	if (numsSize == 1)
+		return nums[0];
+	qsort(nums, numsSize, sizeof(int), cmp);
+	int i = 0;
+	int count = 1;
+	for (i = 0; i<numsSize - 1; i++)
+	{
+		count++;
+		if (count>numsSize / 2)
+			return nums[i + 1];
+		if (nums[i] != nums[i + 1])
+			count = 1;
+	}
+	return 0;
+}
